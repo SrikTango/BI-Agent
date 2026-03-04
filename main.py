@@ -32,6 +32,8 @@ if OPENAI_API_KEY:
 
 app = Flask(__name__)
 
+
+
 def trace_entry(action: str, details: Dict[str, Any]) -> Dict[str, Any]:
     return {
         "timestamp": datetime.utcnow().isoformat() + "Z",
@@ -335,6 +337,10 @@ def handle_query():
             "message": str(e),
             "action_trace": action_trace
         }), 500
+
+@app.route("/", methods=["GET"])
+def home():
+    return "AI Agent is running. Use POST /query to send questions."
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=3000, debug=True)
